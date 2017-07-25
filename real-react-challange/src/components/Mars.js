@@ -1,0 +1,45 @@
+import axios from 'axios'
+import React, { Component } from 'react';
+
+import logo from '../logo.svg';
+
+export default class Mars extends Component {
+  constructor() {
+    super()
+    this.state = {
+      api: {}
+    }
+  }
+
+
+  componentDidMount() {
+    axios.get('https://api.nasa.gov/planetary/apod?api_key=zkv4qNkn6r5RFoxMdNSNjBUX4zSVvl1TgifvRZd5')
+    .then(response => {
+      this.setState({api: response.data})
+      console.log(this.state.api);
+    })
+  }
+
+  hasilApi() {
+    let data = this.state.api
+    return (
+      <div>
+        <a target="_blank" href={data.hdurl}>
+          <img src={data.hdurl} alt="Fjords" width="1080" height="720" />
+        </a>
+        <p>{data.explanation}</p>
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {
+         this.state.api ? this.hasilApi() : <img src={logo} className="App-logo" alt="logo" />
+        }
+
+      </div>
+    );
+  }
+}

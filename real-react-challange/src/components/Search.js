@@ -3,30 +3,36 @@ import React, { Component } from 'react';
 
 import logo from '../logo.svg';
 
-class Search extends Component {
+export default class Search extends Component {
   constructor() {
     super()
     this.state = {
-      api: {}
+      api: {},
+
     }
   }
 
 
   componentDidMount() {
-    axios.get('https://images-api.nasa.gov/search?q='+this.state.query)
+    axios.get("https://images-api.nasa.gov/search?q="+ this.props.match.params.query)
     .then(response => {
-      this.setState({api: response.data})
-      console.log(this.state.api);
+      this.setState({api: response.data.collection})
+      // console.log(this.state.api.items);
     })
   }
 
   hasilApi() {
-    return this.state.api.photos.map(mars => {
+    console.log(this.state.api.items);
+    return this.state.api.items.map(mars => {
+      var img = mars.links[0].href
+      var data = mars.data[0]
       return (
-        <div key={mars.id}>
-          <a target="_blank" href={mars.img_src}>
-            <img src={mars.img_src} alt="Fjords" width="1080" height="720" />
+        <div key={data.date_created}>
+          <a target="_blank" href={img}>
+            <img src={img} alt="Fjords" width="1080" height="720" />
           </a>
+          <p>{data.description}</p>
+          <br />
         </div>
       )
     })
@@ -34,14 +40,12 @@ class Search extends Component {
   }
 
   render() {
+    const data = this.props
+
     return (
       <div className="App">
-        <div className="App-header">
-          <img src="http://vector.me/files/images/1/3/13605/nasa.png" alt="logo" width="100" height="75" />
-          <h2>Welcome to Mars Photo Exhibition </h2>
-        </div>
         {
-         this.state.api.photos ? this.hasilApi() : <img src={logo} className="App-logo" alt="logo" />
+         this.state.api.items ? this.hasilApi(): <img src={logo} className="App-logo" alt="logo" />
 
         }
 
