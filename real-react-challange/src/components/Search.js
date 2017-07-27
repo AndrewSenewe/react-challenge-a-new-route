@@ -31,7 +31,7 @@ export default class Search extends Component {
           <a target="_blank" href={img}>
             <img src={img} alt="Fjords" width="1080" height="720" />
           </a>
-          <p>{data.description}</p>
+          <div className="desc">{data.explanation}</div>
           <br />
         </div>
       )

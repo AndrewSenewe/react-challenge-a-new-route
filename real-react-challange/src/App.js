@@ -55,7 +55,7 @@ class App extends Component {
           <div className="App">
             <div>
               <input type="text" name="search" placeholder="Search.." onChange={(event) => this.searchQuery(event)} />
-              <Link to={"/search/"+this.state.query.split(' ').join('_')}><button>search</button></Link>
+              <Link to={"/search/"+this.state.query.split(' ').join('&')}><button>search</button></Link>
             </div>
             <div className="App-header">
               <img src="http://vector.me/files/images/1/3/13605/nasa.png" alt="logo" width="100" height="75" />
